@@ -473,8 +473,19 @@ class Challenge(Resource):
             attempts = Submissions.query.filter_by(
                 account_id=user.account_id, challenge_id=challenge_id
             ).count()
+
+            is_tryit_challenge = len(Flags.query.filter_by(
+                challenge_id=chal.id,
+                type="TryIT").all()) > 0
+
+            user_id = user.id
+
+
         else:
             attempts = 0
+            is_tryit_challenge = False
+            user_id = 0
+
 
         response["solves"] = solve_count
         response["solved_by_me"] = solved_by_user
@@ -493,6 +504,8 @@ class Challenge(Resource):
             max_attempts=chal.max_attempts,
             attempts=attempts,
             challenge=chal,
+            is_tryit_challenge=is_tryit_challenge,
+            user_id=user_id
         )
 
         db.session.close()

@@ -105,21 +105,34 @@
 						</div>
 						{% endif %}
 
-						<div class="row submit-row">
-							<div class="col-md-9 form-group">
-								{% block input %}
-									<input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
-									<input id="challenge-input" class="challenge-input" type="text" name="answer" placeholder="Flag"/>
-								{% endblock %}
-							</div>
-							<div class="col-md-3 form-group key-submit">
-								{% block submit %}
-								<button id="challenge-submit" class="challenge-submit" type="submit">
-									Submit
-								</button>
-								{% endblock %}
+						{% if is_tryit_challenge %}
+						<div class="row">
+							<div class="col-md-12 form-group">
+								Remember to hash your answer with your user id ({{user_id}})! If you think the answer is <code>emacs_is_awesome</code>, then you have to type <code>tryIT{md5({{user_id}}:emacs_is_awesome)}</code>. <a href="#">More information</a>.<br /><br />
+								Example: <code>tryIT{39d85f9f34b1a4c512dd834925d329ae}</code>
 							</div>
 						</div>
+						{% endif %}
+
+						<form id="challenge-form">
+							<div class="row submit-row">
+								<div class="col-md-9 form-group">
+									{% block input %}
+									<input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
+									{% if is_tryit_challenge %}
+									<input id="challenge-input" class="challenge-input" type="text" name="answer" pattern="tryIT\{[0-9a-f]{32}\}" placeholder="Flag" required title="The flag must be something like: tryIT{39d85f9f34b1a4c512dd834925d329ae}" />
+									{% else %}
+									<input id="challenge-input" class="challenge-input" type="text" name="answer" placeholder="Flag"/>
+									{% endif %}
+									{% endblock %}
+								</div>
+								<div class="col-md-3 form-group key-submit">
+									{% block submit %}
+									<input id="challenge-submit" class="challenge-submit" type="submit" />
+									{% endblock %}
+								</div>
+							</div>
+						</form>
 
 						<div class="row notification-row">
 							<div class="col-md-12">

@@ -106,7 +106,10 @@ const displayChal = chal => {
     });
 
     $("#challenge-submit").click(function(event) {
-      event.preventDefault();
+      if (!document.getElementById("challenge-form").checkValidity()) {
+	return;
+      }
+
       $("#challenge-submit").addClass("disabled-button");
       $("#challenge-submit").prop("disabled", true);
       CTFd._internal.challenge

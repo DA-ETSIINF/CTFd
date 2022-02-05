@@ -1,0 +1,9 @@
+<label>
+	TryIT Flag<br>
+	<small>Enter the value for the TryIT flag. If you type "foo" as the value of the flag,
+	players will need to type <code>TryIT{md5("playerid:foo")}</code> in order to solve it</small>
+</label>
+<div class="form-group">
+	<input type="text" class="form-control" name="content" value="{{ content }}">
+</div>
+<input type="hidden" name="type" value="TryIT">
